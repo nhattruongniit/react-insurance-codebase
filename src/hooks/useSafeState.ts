@@ -14,7 +14,7 @@ const useMounted = () => {
   return mountedRef;
 };
 
-export default function useSafeState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>] {
+export function useSafeState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>] {
   const [state, setState] = useState(initialState);
 
   const mountedRef = useMounted();

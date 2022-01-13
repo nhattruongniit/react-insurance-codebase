@@ -1,46 +1,134 @@
-# Getting Started with Create React App
+# Insurance
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The web apps built with React Typescript, redux and Material Ui.
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+### FE
 
-### `npm start`
+- axios
+- react typescript
+- redux tookit
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### UI Component
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- material UI
 
-### `npm test`
+### Tools
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- eslint
+- prettier
+- husky
 
-### `npm run build`
+## Git replacing LF with CRLF
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+$ git config --global core.autocrlf false
+$ git rm --cached -r .
+$ git reset --hard
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Config VSCode
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Install extensions
 
-### `npm run eject`
+- eslint
+- tslint
+- prettier
+- editorConfig for VSCode
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Edit settings.json file
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Windows: Go to File -> Preferences -> Settings or `Ctrl + ,`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Adding in the settings.json file & create .vscode/settings.json in root project
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+{
+  "files.associations": {
+    "*.jsx": "javascriptreact"
+  },
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
+```
 
-## Learn More
+## Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+# install node version
+Please install at least v15.2.0 version node
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# install npm version
+Please install at least v7.0.10 version node
+```
+
+```bash
+# install app's depndencie
+$ npm install
+```
+
+## Scripts
+
+```bash
+# install typescript
+$ npm install -g typescript
+```
+
+```bash
+# dev server with PORT 3002 at http://localhost:3002/
+$ npm start
+
+# build for production with minify
+$ npm run build
+
+# run `format` to format all code based on your prettier and linting configuration.
+$ npm run format
+
+# env
+$ npm start: .env.development.local, .env.local, .env.development, .env
+
+$ npm run build: .env.production.local, .env.local, .env.production, .env
+```
+
+# Convention code
+
+## Component's file name should be in Pascal Case.
+
+Component names should be like ProductCard and not like productCard, product-card, etc. This way when we see a filename in Pascal Case, it is immediately clear that the file is a react component.
+
+### Components which can be used in other project or reuse.
+
+Components can be keep in `components/` folder.
+
+https://bradfrost.com/blog/post/atomic-web-design/
+
+## Hooks
+
+When we want to share logic between two javascript functions, we will extract it to a third function. Both components and hooks are functions, so this work for them too.
+
+A custom Hook is a javascript function whose name starts with `"use"` and that may call other hook. For example, `useTranslation` below is a custom hook:
+
+```bash
+# useTranslation.tsx
+import { useTranslation } from 'react-i18next';
+const useTranslate = () => {
+  const { t: translate, i18n } = useTranslation();
+  return { translate, i18n };
+};
+export default useTranslate;
+```
+
+## Helpers
+
+Share an function logic for our app. It name should be in lowercase. For example, `sleep` below is a function.
+
+```bash
+# sleep.ts
+
+export const sleep = time => new Promise(res => setTimeout(res, time));
+```

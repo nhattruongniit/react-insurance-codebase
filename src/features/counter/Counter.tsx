@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 import { useAppSelector, useAppDispatch } from 'state/hooks';
 import {
   decrement,
@@ -7,14 +5,17 @@ import {
   incrementByAmount,
   incrementAsync,
   incrementIfOdd,
-  selectCount,
 } from 'state/counter/counterSlice';
+import { countSelector } from 'state/counter/counterSelector';
 import styles from './Counter.module.css';
 
+// hooks
+import { useSafeState } from 'hooks';
+
 export function Counter() {
-  const count = useAppSelector(selectCount);
+  const count = useAppSelector(countSelector);
   const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [incrementAmount, setIncrementAmount] = useSafeState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
 
