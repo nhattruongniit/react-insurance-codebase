@@ -39,8 +39,7 @@ export function Counter() {
         </button>
         <button className={styles.button} onClick={() => dispatch(incrementIfOdd(incrementValue))}>
           Add If Odd d sd
-        </button>{' '}
-        dsads
+        </button>
       </div>
     </div>
   );
