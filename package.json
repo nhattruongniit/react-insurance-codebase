@@ -33,7 +33,9 @@
     "build:staging": "env-cmd -f .env.staging react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint --ext .ts,.tsx src --color"
   },
   "eslintConfig": {
     "extends": [
@@ -52,5 +54,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1"
   }
 }
