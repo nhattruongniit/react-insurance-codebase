@@ -11,11 +11,13 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 
 // material icon
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // stypes
 import useStyles from './styles';
@@ -51,6 +53,8 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
   const classes = useStyles();
   const menuId = 'primary-search-account-menu';
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorLanguage, setAnchorLanguage] = React.useState<null | HTMLElement>(null);
+  const [language, setLanguage] = React.useState<string>(process.env.REACT_APP_LANGUAGE);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -60,6 +64,32 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleOpenLanguage = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorLanguage(event.currentTarget);
+  };
+
+  const handleCloseLanguage = () => {
+    setAnchorLanguage(null);
+  };
+
+  const handleChangeLanguage = (language: string) => () => {
+    setLanguage(language);
+    setAnchorLanguage(null);
+  };
+
+  const renderTextLanguage = () => {
+    switch (language) {
+      case 'en': {
+        return 'ENGLISH';
+      }
+      case 'vn': {
+        return 'VIETNAMESE';
+      }
+      default:
+        return null;
+    }
   };
 
   return (
@@ -82,6 +112,31 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
             Internal Dashboard
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Button
+              className={classes.menuLanguage}
+              aria-controls="simple-menu"
+              title="Change Language"
+              aria-haspopup="true"
+              onClick={handleOpenLanguage}
+            >
+              {renderTextLanguage()} <ExpandMoreIcon />
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorLanguage}
+              keepMounted
+              open={Boolean(anchorLanguage)}
+              onClose={handleCloseLanguage}
+            >
+              <MenuItem selected={language === 'en'} onClick={handleChangeLanguage('en')}>
+                English
+              </MenuItem>
+              <MenuItem selected={language === 'vn'} onClick={handleChangeLanguage('vn')}>
+                Vietnamese
+              </MenuItem>
+            </Menu>
+          </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="error">

@@ -6,6 +6,9 @@ const useStyles = makeStyles(() => ({
     marginBottom: 6,
     fontSize: '1rem',
   },
+  menuLanguage: {
+    color: '#fff',
+  },
 }));
 
 export default useStyles;
