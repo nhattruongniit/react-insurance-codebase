@@ -6,7 +6,7 @@ The web apps built with React Typescript, redux and Material Ui.
 
 ### FE
 
-- axios
+- axios interceptor
 - react typescript
 - redux tookit
 
@@ -16,7 +16,6 @@ The web apps built with React Typescript, redux and Material Ui.
 
 ### Tools
 
-- eslint
 - prettier
 - husky
 
