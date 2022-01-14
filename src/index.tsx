@@ -8,8 +8,13 @@ import App from './App';
 // store
 import { store } from 'state/index';
 
+// services
+import initRequest from 'services/initRequest';
+
 // styles
 import './index.css';
+
+initRequest(store);
 
 ReactDOM.render(
   <Provider store={store}>

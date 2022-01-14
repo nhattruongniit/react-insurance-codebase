@@ -12,12 +12,21 @@ import styles from './Counter.module.css';
 // hooks
 import { useSafeState } from 'hooks';
 
+// apis
+import * as appApi from 'apis/appApi';
+
 export function Counter() {
   const count = useAppSelector(countSelector);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useSafeState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
+
+  async function handleFetchTodo() {
+    const res = await appApi.fetchTodo();
+
+    console.log('handleFetchTodo: ', res.data);
+  }
 
   return (
     <>
@@ -81,7 +90,11 @@ export function Counter() {
       >
         test snackbar
       </button>
-      acasd
+      <br />
+      <br />
+      <button className={styles.button} aria-label="Decrement value" onClick={handleFetchTodo}>
+        fetch todo
+      </button>
     </>
   );
 }
