@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface AppState {
   snackbar: {};
   isLoading: boolean;
+  language: string;
 }
 
 const initialState: AppState = {
   snackbar: {},
   isLoading: false,
+  language: 'en',
 };
 
 export const appSlice = createSlice({
@@ -33,9 +35,12 @@ export const appSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    setLanguage: (state, action: PayloadAction<string>) => {
+      state.language = action.payload;
+    },
   },
 });
 
-export const { enqueueSnackbar, removeSnackbar, setLoading } = appSlice.actions;
+export const { enqueueSnackbar, removeSnackbar, setLoading, setLanguage } = appSlice.actions;
 
 export default appSlice.reducer;

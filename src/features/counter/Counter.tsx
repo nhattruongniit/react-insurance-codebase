@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 // material core
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -16,6 +18,7 @@ import { useSafeState } from 'hooks';
 import * as appApi from 'apis/appApi';
 
 export function Counter() {
+  const { t } = useTranslation();
   const count = useAppSelector(countSelector);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useSafeState('2');
@@ -95,6 +98,9 @@ export function Counter() {
       <button className={styles.button} aria-label="Decrement value" onClick={handleFetchTodo}>
         fetch todo
       </button>
+      <br />
+      <br />
+      Multi-language: {t('profile')}
     </>
   );
 }

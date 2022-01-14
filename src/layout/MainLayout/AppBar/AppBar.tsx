@@ -19,6 +19,14 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+// configs
+import { LANGUAGE } from 'configs';
+
+// state
+import { languageSelector } from 'state/app/appSelector';
+import { useAppSelector, useAppDispatch } from 'state/hooks';
+import { setLanguage } from 'state/app/appSlice';
+
 // stypes
 import useStyles from './styles';
 
@@ -51,10 +59,10 @@ type IProps = {
 
 const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
   const classes = useStyles();
-  const menuId = 'primary-search-account-menu';
+  const dispatch = useAppDispatch();
+  const language = useAppSelector(languageSelector);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorLanguage, setAnchorLanguage] = React.useState<null | HTMLElement>(null);
-  const [language, setLanguage] = React.useState<string>(process.env.REACT_APP_LANGUAGE);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -75,17 +83,17 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
   };
 
   const handleChangeLanguage = (language: string) => () => {
-    setLanguage(language);
+    dispatch(setLanguage(language));
     setAnchorLanguage(null);
   };
 
   const renderTextLanguage = () => {
     switch (language) {
-      case 'en': {
+      case LANGUAGE.EN: {
         return 'ENGLISH';
       }
-      case 'vn': {
-        return 'VIETNAMESE';
+      case LANGUAGE.INDO: {
+        return 'ID';
       }
       default:
         return null;
@@ -129,11 +137,11 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
               open={Boolean(anchorLanguage)}
               onClose={handleCloseLanguage}
             >
-              <MenuItem selected={language === 'en'} onClick={handleChangeLanguage('en')}>
+              <MenuItem selected={language === LANGUAGE.EN} onClick={handleChangeLanguage(LANGUAGE.EN)}>
                 English
               </MenuItem>
-              <MenuItem selected={language === 'vn'} onClick={handleChangeLanguage('vn')}>
-                Vietnamese
+              <MenuItem selected={language === LANGUAGE.INDO} onClick={handleChangeLanguage(LANGUAGE.INDO)}>
+                ID
               </MenuItem>
             </Menu>
           </Box>
@@ -147,7 +155,6 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
               size="large"
               edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -163,7 +170,6 @@ const PrimaryAppBar = ({ open = false, handleDrawerOpen }: IProps) => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        id={menuId}
         keepMounted
         transformOrigin={{
           vertical: 'top',

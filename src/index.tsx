@@ -8,6 +8,9 @@ import App from './App';
 // store
 import { store } from 'state/index';
 
+// i18n
+import 'locales/i18n';
+
 // services
 import initRequest from 'services/initRequest';
 
