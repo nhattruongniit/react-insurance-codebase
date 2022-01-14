@@ -19,8 +19,6 @@ export function Counter() {
 
   const incrementValue = Number(incrementAmount) || 0;
 
-  var bca = 123;
-
   return (
     <>
       <Grid container alignItems="center">
