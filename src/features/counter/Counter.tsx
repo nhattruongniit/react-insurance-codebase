@@ -19,7 +19,7 @@ export function Counter() {
 
   const incrementValue = Number(incrementAmount) || 0;
 
-  let abc = 12;
+  var bca = 123;
 
   return (
     <>
