@@ -19,6 +19,7 @@ The web apps built with React Typescript, redux and Material Ui.
 
 - prettier
 - husky
+- lint-staged
 
 ## Git replacing LF with CRLF
 
