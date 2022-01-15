@@ -22,6 +22,7 @@ const NavBar = () => {
   };
 
   let abc = 13;
+  let tr = null;
 
   return (
     <>
