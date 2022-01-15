@@ -21,6 +21,8 @@ const NavBar = () => {
     navigate(path);
   };
 
+  let abc = 13;
+
   return (
     <>
       <List>
