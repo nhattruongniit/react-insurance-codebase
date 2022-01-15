@@ -8,6 +8,7 @@ The web apps built with React Typescript, redux and Material Ui.
 
 - axios interceptor
 - react typescript
+- react i18next
 - redux tookit
 
 ### UI Component

@@ -11,6 +11,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 // components
 import AppBar from './AppBar';
 import NavBar from './NavBar';
@@ -90,7 +91,8 @@ const MainLayout: React.FC = ({ children }) => {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }} style={{ width: '100%' }}>
         <DrawerHeader />
-        <div>{children}</div>
+
+        {children}
       </Box>
     </Box>
   );

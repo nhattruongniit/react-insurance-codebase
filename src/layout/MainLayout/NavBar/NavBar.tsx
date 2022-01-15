@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 // material core
 import List from '@mui/material/List';
 
@@ -5,19 +7,41 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GroupIcon from '@mui/icons-material/Group';
+
+// configs
+import { PATH_NAME } from 'configs';
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const handleGoTo = (path: string) => () => {
+    navigate(path);
+  };
+
   return (
     <>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts', 'All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button onClick={handleGoTo(PATH_NAME.EMPLOYER)}>
+          <ListItemIcon>
+            <PersonOutlineIcon />
+          </ListItemIcon>
+          <ListItemText primary="Employes" />
+        </ListItem>
+        <ListItem button onClick={handleGoTo(PATH_NAME.EMPLOYEES)}>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Members" />
+        </ListItem>
+        <ListItem button onClick={handleGoTo(PATH_NAME.USER_MANAGEMENT)}>
+          <ListItemIcon>
+            <GroupIcon />
+          </ListItemIcon>
+          <ListItemText primary="User Management" />
+        </ListItem>
       </List>
     </>
   );
