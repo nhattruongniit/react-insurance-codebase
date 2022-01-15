@@ -80,12 +80,17 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "prettier-staged"
     }
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "npm run lint",
+      "npm run lint"
+    ]
+  },
+  "prettier-staged": {
+    "*.{ts,tsx}": [
       "npm run format"
     ]
   }
