@@ -13,18 +13,8 @@ import SnackBarBase from 'components/SnackBar';
 import { languageSelector } from 'state/app/appSelector';
 import { useAppSelector } from 'state/hooks';
 
-// guards
-import GuestGuard from 'guards/GuestGuard';
-import AuthGuard from 'guards/AuthGuard';
-
-// configs
-import { PATH_NAME } from 'configs';
-
-// feature
-const Employer = React.lazy(() => import('features/employer'));
-const UserManagement = React.lazy(() => import('features/user-management'));
-const Employees = React.lazy(() => import('features/employees'));
-const Login = React.lazy(() => import('features/login'));
+// routes
+import RoutesMain from 'routes/Routes';
 
 function App() {
   const { i18n } = useTranslation();
@@ -43,68 +33,7 @@ function App() {
       }}
       maxSnack={process.env.REACT_APP_MAX_SNACKBAR || 3}
     >
-      <Router>
-        <React.Suspense fallback={<div />}>
-          <Routes>
-            <Route
-              path={PATH_NAME.LOGIN}
-              element={
-                <GuestGuard>
-                  <Login />
-                </GuestGuard>
-              }
-            />
-          </Routes>
-          <Routes>
-            <Route
-              path={PATH_NAME.ROOT}
-              element={
-                <AuthGuard>
-                  <MainLayout>
-                    <Employer />
-                  </MainLayout>
-                </AuthGuard>
-              }
-            />
-          </Routes>
-          <Routes>
-            <Route
-              path={PATH_NAME.EMPLOYER}
-              element={
-                <AuthGuard>
-                  <MainLayout>
-                    <Employer />
-                  </MainLayout>
-                </AuthGuard>
-              }
-            />
-          </Routes>
-          <Routes>
-            <Route
-              path={PATH_NAME.EMPLOYEES}
-              element={
-                <AuthGuard>
-                  <MainLayout>
-                    <Employees />
-                  </MainLayout>
-                </AuthGuard>
-              }
-            />
-          </Routes>
-          <Routes>
-            <Route
-              path={PATH_NAME.USER_MANAGEMENT}
-              element={
-                <AuthGuard>
-                  <MainLayout>
-                    <UserManagement />
-                  </MainLayout>
-                </AuthGuard>
-              }
-            />
-          </Routes>
-        </React.Suspense>
-      </Router>
+      <RoutesMain />
 
       <SnackBarBase />
     </SnackbarProvider>

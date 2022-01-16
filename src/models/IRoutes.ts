@@ -1,12 +1,10 @@
 import React, { ComponentType } from 'react';
 
-type IRouteItem = {
-  exact?: boolean;
+export type IRouteItem = {
   path?: string;
   guard?: React.LazyExoticComponent<ComponentType<unknown>> | ComponentType<unknown>;
   layout?: React.FunctionComponent;
-  component?: any;
-  requireRoles?: string[] | [];
+  element?: React.LazyExoticComponent<() => JSX.Element> | any;
 };
 
 export type IRoutes = IRouteItem & {

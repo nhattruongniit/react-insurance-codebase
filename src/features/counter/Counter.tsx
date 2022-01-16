@@ -17,7 +17,7 @@ import { useSafeState } from 'hooks';
 // apis
 import * as appApi from 'apis/appApi';
 
-export function Counter() {
+export default function Counter() {
   const { t } = useTranslation();
   const count = useAppSelector(countSelector);
   const dispatch = useAppDispatch();
@@ -26,9 +26,9 @@ export function Counter() {
   const incrementValue = Number(incrementAmount) || 0;
 
   async function handleFetchTodo() {
-    const res = await appApi.fetchTodo();
+    const res = await appApi.fetchMember();
 
-    console.log('handleFetchTodo: ', res.data);
+    console.log('handleFetchTodo: ', res);
   }
 
   return (
