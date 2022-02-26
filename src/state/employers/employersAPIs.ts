@@ -1,32 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Plugin, Template, TemplatePlaceholder } from '@devexpress/dx-react-core';
-import { FilteringState, IntegratedFiltering, PagingState, CustomPaging, SearchState, Column } from '@devexpress/dx-react-grid';
-import {
-  Grid,
-  DragDropProvider,
-  Table,
-  TableHeaderRow,
-  TableColumnReordering,
-  TableFilterRow,
-  PagingPanel,
-  ColumnChooser,
-  TableColumnVisibility,
-  TableFixedColumns,
-  Toolbar,
-  SearchPanel,
-} from '@devexpress/dx-react-grid-material-ui';
-import { useTranslation } from 'react-i18next';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import httpRequest from 'services/httpRequest';
+import { FETCH_EMPLOYERS } from './apiUrls';
 
-import { DEFAULT_PAGE_SIZE, PAGE_SZIES } from 'configs/constants';
-import { fetchEmployers } from 'state/employers/employersAPIs';
-import { useAppSelector } from 'state/hooks';
-import { employersSelector } from 'state/employers/employersSlice';
-import LoadingTable from 'components/LoadingTable/LoadingTable';
+import { IResponseEmployers, IFetchEmployerArgs } from './interface';
 
 const mockData = {
   data: [
@@ -224,113 +201,16 @@ const mockData = {
   totalCount: 70,
 };
 
-const ActionCell = ({ row, column, ...restProps }: any) =>
-  column.name === 'actions' ? (
-    <Table.Cell {...restProps}>
-      <Button
-        onClick={() => {
-          alert(JSON.stringify(row));
-        }}
-      >
-        View
-      </Button>
-    </Table.Cell>
-  ) : (
-    <Table.Cell row={row} column={column} {...restProps} />
-  );
+export const fetchEmployers = createAsyncThunk<any, IFetchEmployerArgs, { rejectValue: string }>(
+  'employers/fetch',
+  async (payload, thunkAPI) => {
+    try {
+      // let { data } = await httpRequest.get(FETCH_EMPLOYERS, { params: payload });
+      const data = mockData.data;
 
-const DataTable = () => {
-  const dispatch = useDispatch();
-  const { dataList, totalCount, isFetching } = useAppSelector(employersSelector);
-  const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
-  const [rightColumns] = useState<Array<string | symbol>>(['actions']);
-  const [searchValue, setSearchState] = useState<string>('');
-  const columns: Column[] = useMemo(
-    () => [
-      { name: 'CompanyName', title: t('employers.table.company') },
-      { name: 'TotalActiveMember', title: t('employers.table.total_active_member') },
-      { name: 'InsuranceCurrency', title: t('employers.table.insurance_premium_currency') },
-      { name: 'TotalActivePremium', title: t('employers.table.total_active_premium') },
-      { name: 'TotalPremiumRenewal', title: t('employers.table.total_active_premium_renewal') },
-      { name: 'CountryName', title: t('employers.table.country') },
-      { name: 'Insurer', title: t('employers.table.insurer') },
-      { name: 'InsuranceBroker', title: t('employers.table.insurance_broker') },
-      { name: 'actions', title: t('employers.table.actions') },
-    ],
-    [t],
-  );
-  const tableColumnExtensions: Table.ColumnExtension[] = useMemo(
-    () => [
-      {
-        columnName: 'actions',
-        width: 100,
-        align: 'center',
-      },
-    ],
-    [],
-  );
-
-  const filteringStateColumnExtensions: FilteringState.ColumnExtension[] = useMemo(
-    () => [
-      {
-        columnName: 'actions',
-        filteringEnabled: false,
-      },
-    ],
-    [],
-  );
-
-  function handleChangePageSize(pageNumber: number): void {
-    setCurrentPage(0);
-    setPageSize(pageNumber);
-  }
-
-  useEffect(() => {
-    dispatch(fetchEmployers({ skip: pageSize * currentPage, take: pageSize, requireTotalCount: true }));
-  }, [dispatch, currentPage, pageSize]);
-
-  return (
-    <Paper sx={{ position: 'relative' }}>
-      <Grid rows={mockData.data} columns={columns}>
-        <FilteringState columnExtensions={filteringStateColumnExtensions} />
-        <SearchState value={searchValue} onValueChange={setSearchState} />
-        <PagingState
-          currentPage={currentPage}
-          onCurrentPageChange={setCurrentPage}
-          pageSize={pageSize}
-          onPageSizeChange={handleChangePageSize}
-        />
-        <CustomPaging totalCount={totalCount} />
-
-        <IntegratedFiltering />
-
-        <DragDropProvider />
-        <Table cellComponent={ActionCell} columnExtensions={tableColumnExtensions} />
-        <TableColumnReordering />
-        <TableHeaderRow />
-        <TableFilterRow />
-        <PagingPanel pageSizes={PAGE_SZIES} />
-        <TableColumnVisibility />
-        <TableFixedColumns rightColumns={rightColumns} />
-        <Toolbar />
-        <Plugin>
-          <Template name="toolbarContent">
-            <Box sx={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-              <Button color="primary" variant="contained">
-                Create Employer
-              </Button>
-            </Box>
-            <TemplatePlaceholder />
-          </Template>
-        </Plugin>
-        <SearchPanel />
-        <ColumnChooser />
-      </Grid>
-      {isFetching && <LoadingTable />}
-    </Paper>
-  );
-};
-
-export default DataTable;
+      return data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  },
+);
